@@ -4,13 +4,22 @@
 
 /* Hero Section */
 .hero-section {
-  background: linear-gradient(135deg, #2E86AB 0%, #7FC8D5 50%, #A8DADC 100%);
-  min-height: 100vh;
+  background: url('../assets/iset_tozeur_cover.jpg');
+  background-size: 99%;
+  background-position: center 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 98vh;
   display: flex;
   align-items: center;
   color: white;
   position: relative;
   overflow: hidden;
+}
+
+.hero-section .container {
+  position: relative;
+  width: 100%;
 }
 
 .hero-section::before {
@@ -33,12 +42,54 @@
   text-align: center;
   position: relative;
   z-index: 1;
+  width: 100%;
 }
 
-.logo {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+/* Logo positioning - Fixed top left */
+.logo-container {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 1000;
+}
+
+.iset-logo {
+  
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   animation: bounce 2s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+}
+
+.iset-logo-image {
+  
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.iset-text-fallback {
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+
+.iset-main {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.iset-city {
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.iset-badge {
+  font-size: 2.5rem;
 }
 
 @keyframes bounce {
@@ -52,15 +103,19 @@
   font-weight: 700;
   margin-bottom: 1rem;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  margin-top: 6rem;
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
+  opacity: 1;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  color: white;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 .cta-buttons {
@@ -188,8 +243,16 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .logo-container {
+    position: static;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
   .hero-title {
     font-size: 2.5rem;
+    margin-top: 0;
   }
   
   .hero-subtitle {
