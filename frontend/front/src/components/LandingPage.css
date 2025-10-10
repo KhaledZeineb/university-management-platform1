@@ -5,7 +5,8 @@
 /* Hero Section */
 .hero-section {
   background: url('../assets/iset_tozeur_cover.jpg');
-  background-size: 99%;
+ 
+  background-size: 100%;
   background-position: center 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -54,19 +55,19 @@
 }
 
 .iset-logo {
-  
+  position: fixed;
   display: flex;
   align-items: center;
   gap: 1rem;
-  animation: bounce 2s ease-in-out infinite;
+ 
   background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+ 
   padding: 0.5rem 1rem;
   border-radius: 12px;
 }
 
 .iset-logo-image {
-  
+  position: fixed;
   width: 80px;
   height: 80px;
   object-fit: contain;
@@ -249,25 +250,25 @@
     justify-content: center;
     margin-bottom: 2rem;
   }
-  
+ 
   .hero-title {
     font-size: 2.5rem;
     margin-top: 0;
   }
-  
+ 
   .hero-subtitle {
     font-size: 1.1rem;
   }
-  
+ 
   .cta-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+ 
   .features-grid, .roles-grid {
     grid-template-columns: 1fr;
   }
-  
+ 
   .section-title {
     font-size: 2rem;
   }

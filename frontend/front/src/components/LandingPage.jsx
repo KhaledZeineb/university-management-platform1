@@ -14,12 +14,14 @@ const LandingPage = () => {
   const checkServerStatus = async () => {
     try {
       const response = await axios.get('/health');
+      console.log('✅ Serveur actif:', response.data);
       setServerStatus({
         online: true,
         message: response.data.message,
         timestamp: response.data.timestamp
       });
     } catch (error) {
+      console.log('❌ Serveur hors ligne:', error.message);
       setServerStatus({
         online: false,
         message: 'Serveur non disponible'
@@ -62,24 +64,6 @@ const LandingPage = () => {
               <Link to="/login" className="btn btn-primary">
                 Se connecter
               </Link>
-            </div>
-
-            {/* Server Status */}
-            <div className={`server-status ${serverStatus?.online ? 'online' : 'offline'}`}>
-              <div className="status-indicator">
-                {loading ? (
-                  <span>🔄 Vérification...</span>
-                ) : serverStatus?.online ? (
-                  <span>✅ Serveur actif</span>
-                ) : (
-                  <span>❌ Serveur hors ligne</span>
-                )}
-              </div>
-              {serverStatus?.timestamp && (
-                <div className="timestamp">
-                  Dernière vérification: {new Date(serverStatus.timestamp).toLocaleTimeString()}
-                </div>
-              )}
             </div>
           </div>
         </div>
