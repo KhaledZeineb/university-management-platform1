@@ -164,6 +164,7 @@
 .features-section, .roles-section {
   padding: 5rem 0;
   background: white;
+  padding-top: 3%;
 }
 
 .section-title {
@@ -209,8 +210,9 @@
 }
 
 .feature-card p {
-  color: #64748b;
+  color: #080808;
   line-height: 1.6;
+  font-weight: bold; 
 }
 
 /* Role Cards */

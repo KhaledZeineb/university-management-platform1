@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './LandingPage.css';
 import heroVideo from '../assets/1.mp4';
+import { Info } from "lucide-react";
 
 const LandingPage = () => {
   const [serverStatus, setServerStatus] = useState(null);
@@ -113,7 +114,7 @@ const LandingPage = () => {
       {/* Features Section */}
       <section className="features-section" aria-labelledby="features-title">
         <div className="container">
-          <h2 id="features-title" className="section-title">Fonctionnalités</h2>
+          <h2 id="features-title" className="section-title">À propos</h2>
           <div className="features-grid">
             {FEATURES.map((feature, index) => (
               <article key={index} className="feature-card">
@@ -162,26 +163,14 @@ const LandingPage = () => {
 
 // Constants
 const FEATURES = [
+ 
   {
-    icon: '👥',
-    title: 'Gestion des utilisateurs',
-    description: 'Administration complète des étudiants, enseignants et directeurs de département'
-  },
-  {
-    icon: '📚',
-    title: 'Gestion des cours',
-    description: 'Création et suivi des cours, programmes et matières'
-  },
-  {
-    icon: '📊',
-    title: 'Statistiques',
-    description: 'Tableaux de bord et rapports détaillés sur les performances'
-  },
-  {
-    icon: '🔒',
-    title: 'Sécurité',
-    description: 'Authentification sécurisée avec gestion des rôles'
+    icon: <Info className="w-6 h-6 text-blue-600" />,
+   
+    description: "L'Institut Supérieur des Etudes Technologiques de Tozeur a été créé par le décret 2004-2204 du 14 septembre 2004. Les cours ont démarré le 16 septembre 2004. Il fait partie d'un réseau d'établissements. Il s'agit du premier établissement d'enseignement supérieur dans la région, il a donc pour mission et pour responsabilité de répondre aux besoins en formation continue et d'ouvrir les horizons aux travailleurs."
   }
+ 
+  
 ];
 
 const ROLES = [
