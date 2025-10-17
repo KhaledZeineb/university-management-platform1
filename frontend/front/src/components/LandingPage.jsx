@@ -247,7 +247,7 @@ const LandingPage = () => {
             <div className="footer-column">
               <h3 className="footer-title">📞 Contact</h3>
               <p className="footer-text">
-                Tél: +216 XX XXX XXX<br />
+                Tél: +216 76 473 777<br />
                 Email: contact@isettozeur.tn
               </p>
             </div>
@@ -273,13 +273,13 @@ const LandingPage = () => {
 const STATISTICS = [
   {
     icon: '🎓',
-    number: '600',
+    number: '1400',
     label: 'ÉTUDIANTS',
     sublabel: "L'ANNÉE UNIVERSITAIRE 2021/2022"
   },
   {
     icon: '👨‍🏫',
-    number: '60',
+    number: '70',
     label: 'ENSEIGNANTS',
     sublabel: "L'ANNÉE UNIVERSITAIRE 2021/2022"
   },
@@ -291,7 +291,7 @@ const STATISTICS = [
   },
   {
     icon: '📜',
-    number: '1500',
+    number: '2700',
     label: 'DIPLÔMÉS',
     sublabel: '(DEPUIS 2004)'
   }
