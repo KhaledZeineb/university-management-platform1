@@ -129,22 +129,21 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* Roles Section */}
-      <section className="roles-section" aria-labelledby="roles-title">
+      {/* Statistics Section */}
+      <section className="statistics-section" aria-labelledby="stats-title">
         <div className="container">
-          <h2 id="roles-title" className="section-title">Accès par rôle</h2>
-          <div className="roles-grid">
-            {ROLES.map((role, index) => (
-              <article key={index} className={`role-card ${role.className}`}>
-                <div className="role-icon" aria-hidden="true">
-                  {role.icon}
+          <h2 id="stats-title" className="section-title">ISET TOZEUR EN CHIFFRES</h2>
+          <div className="stats-grid">
+            {STATISTICS.map((stat, index) => (
+              <article key={index} className="stat-card">
+                <div className="stat-icon" aria-hidden="true">
+                  {stat.icon}
                 </div>
-                <h3>{role.title}</h3>
-                <ul>
-                  {role.features.map((item, idx) => (
-                    <li key={idx}>{item}</li>
-                  ))}
-                </ul>
+                <div className="stat-content">
+                  <div className="stat-number">{stat.number}</div>
+                  <div className="stat-label">{stat.label}</div>
+                  {stat.sublabel && <div className="stat-sublabel">{stat.sublabel}</div>}
+                </div>
               </article>
             ))}
           </div>
@@ -163,49 +162,36 @@ const LandingPage = () => {
 
 // Constants
 const FEATURES = [
- 
   {
     icon: <Info className="w-6 h-6 text-blue-600" />,
-   
     description: "L'Institut Supérieur des Etudes Technologiques de Tozeur a été créé par le décret 2004-2204 du 14 septembre 2004. Les cours ont démarré le 16 septembre 2004. Il fait partie d'un réseau d'établissements. Il s'agit du premier établissement d'enseignement supérieur dans la région, il a donc pour mission et pour responsabilité de répondre aux besoins en formation continue et d'ouvrir les horizons aux travailleurs."
   }
- 
-  
 ];
 
-const ROLES = [
+const STATISTICS = [
   {
     icon: '🎓',
-    title: 'Étudiants',
-    className: 'student',
-    features: [
-      'Consultation des cours',
-      'Suivi des notes',
-      'Planning personnel',
-      'Historique des absences'
-    ]
+    number: '600',
+    label: 'ÉTUDIANTS',
+    sublabel: "L'ANNÉE UNIVERSITAIRE 2021/2022"
   },
   {
-    icon: '👩‍🏫',
-    title: 'Enseignants',
-    className: 'teacher',
-    features: [
-      'Gestion des cours',
-      'Saisie des notes',
-      'Suivi des étudiants',
-      'Planning d\'enseignement'
-    ]
+    icon: '👨‍🏫',
+    number: '60',
+    label: 'ENSEIGNANTS',
+    sublabel: "L'ANNÉE UNIVERSITAIRE 2021/2022"
   },
   {
-    icon: '👨‍💼',
-    title: 'Directeurs de Département',
-    className: 'admin',
-    features: [
-      'Gestion des utilisateurs',
-      'Configuration du système',
-      'Rapports et statistiques',
-      'Administration générale'
-    ]
+    icon: '🏛️',
+    number: '12',
+    label: 'CLUBS',
+    sublabel: null
+  },
+  {
+    icon: '📜',
+    number: '1500',
+    label: 'DIPLÔMÉS',
+    sublabel: '(DEPUIS 2004)'
   }
 ];
 

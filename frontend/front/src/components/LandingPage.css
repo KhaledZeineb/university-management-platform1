@@ -66,8 +66,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
- 
-  
   padding: 0.5rem 1rem;
   border-radius: 12px;
 }
@@ -161,7 +159,7 @@
 }
 
 /* Features Section */
-.features-section, .roles-section {
+.features-section {
   padding: 5rem 0;
   background: white;
   padding-top: 3%;
@@ -175,14 +173,14 @@
   color: #1a202c;
 }
 
-.features-grid, .roles-grid {
+.features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
 }
 
-.feature-card, .role-card {
+.feature-card {
   background: white;
   padding: 2rem;
   border-radius: 16px;
@@ -192,17 +190,17 @@
   border: 1px solid #e2e8f0;
 }
 
-.feature-card:hover, .role-card:hover {
+.feature-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(0,0,0,0.12);
 }
 
-.feature-icon, .role-icon {
+.feature-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
 
-.feature-card h3, .role-card h3 {
+.feature-card h3 {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
@@ -215,29 +213,121 @@
   font-weight: bold; 
 }
 
-/* Role Cards */
-.role-card.student { border-left: 4px solid #3b82f6; }
-.role-card.teacher { border-left: 4px solid #f59e0b; }
-.role-card.admin { border-left: 4px solid #10b981; }
+/* Statistics Section */
+.statistics-section {
+  padding: 5rem 0;
+  background: #f0f0f0;
+}
 
-.role-card ul {
-  list-style: none;
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2.5rem 2rem;
+  background: white;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  border-left: 4px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #003d6b 0%, #0056a3 100%);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover::before {
+  transform: scaleY(1);
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 35px rgba(0, 61, 107, 0.15);
+}
+
+.stat-bottom {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.stat-icon {
+  font-size: 3.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
   text-align: left;
 }
 
-.role-card li {
-  padding: 0.5rem 0;
-  color: #64748b;
-  position: relative;
-  padding-left: 1.5rem;
+.stat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.role-card li:before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: #10b981;
-  font-weight: bold;
+.stat-number {
+  font-size: clamp(3.5rem, 6vw, 5rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #003d6b 0%, #0056a3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 0.9;
+  margin: 0;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  transition: all 0.4s ease;
+  text-align: center;
+}
+
+.stat-card:hover .stat-number {
+  transform: scale(1.08);
+  filter: drop-shadow(0 4px 8px rgba(0, 61, 107, 0.2));
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.stat-sublabel {
+  font-size: 0.7rem;
+  color: #64748b;
+  letter-spacing: 0.3px;
+  margin-top: 0.1rem;
+  font-style: italic;
+  line-height: 1.2;
 }
 
 /* Footer */
@@ -271,11 +361,60 @@
     align-items: center;
   }
  
-  .features-grid, .roles-grid {
+  .features-grid, .stats-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
  
   .section-title {
     font-size: 2rem;
+  }
+
+  .stat-card {
+    padding: 2rem 1.5rem;
+    gap: 1.2rem;
+  }
+
+  .stat-number {
+    font-size: 3.5rem;
+  }
+
+  .stat-icon {
+    font-size: 3rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+  }
+
+  .stat-bottom {
+    flex-direction: row;
+    gap: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-card {
+    padding: 1.8rem 1.2rem;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+  
+  .stat-sublabel {
+    font-size: 0.65rem;
+  }
+
+  .stat-bottom {
+    gap: 0.6rem;
   }
 }
