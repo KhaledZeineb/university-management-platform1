@@ -111,6 +111,7 @@ body {
 }
 
 .btn-french,
+.btn-language,
 .btn-extranet {
   padding: 0.75rem 1.5rem;
   border: none;
@@ -121,14 +122,26 @@ body {
   font-size: 0.9rem;
 }
 
-.btn-french {
-  background: #f59e0b;
+.btn-french,
+.btn-language {
+  background: rgba(255, 255, 255, 0.1);
   color: white;
+  border: 2px solid transparent;
 }
 
-.btn-french:hover {
-  background: #d97706;
+.btn-language.active {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.btn-french:hover,
+.btn-language:hover {
+  background: rgba(255, 255, 255, 0.15);
   transform: translateY(-2px);
+}
+
+.btn-language.active:hover {
+  background: #d97706;
 }
 
 .btn-extranet {
