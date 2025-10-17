@@ -38,39 +38,19 @@ const LandingPage = () => {
     {
       title: language === 'fr' ? "Nos Départements" : "Our Departments",
       submenu: language === 'fr'
-        ? ["Technologies de l'Informatique", "Génie Électrique", "Gestion"]
+        ? ["Technologies de l'Informatique", "Génie Électrique", "Génie civil", "Génie mécanique"]
         : ["Information Technology", "Electrical Engineering", "Management"]
     },
-    {
-      title: language === 'fr' ? "Formation" : "Training",
-      submenu: language === 'fr'
-        ? ["Organigramme", "Déroulement de stages", "Meilleurs projets", "Lauréats"]
-        : ["Organization Chart", "Internship Process", "Best Projects", "Graduates"]
-    },
+    
     {
       title: language === 'fr' ? "Vie Étudiantine" : "Student Life",
       submenu: language === 'fr'
         ? ["Clubs", "Manifestations", "Activités sportives", "Activités culturelles"]
         : ["Clubs", "Events", "Sports Activities", "Cultural Activities"]
     },
-    {
-      title: language === 'fr' ? "Projets" : "Projects",
-      submenu: language === 'fr'
-        ? ["Projets en cours", "Projets réalisés"]
-        : ["Ongoing Projects", "Completed Projects"]
-    },
-    {
-      title: language === 'fr' ? "Entreprise" : "Business",
-      submenu: language === 'fr'
-        ? ["Stages", "Partenariats"]
-        : ["Internships", "Partnerships"]
-    },
-    {
-      title: language === 'fr' ? "Espace Centres" : "Centers Space",
-      submenu: language === 'fr'
-        ? ["Excellence", "Certification"]
-        : ["Excellence", "Certification"]
-    }
+    
+   
+    
   ];
 
   const STATISTICS = [
