@@ -14,7 +14,6 @@ const LandingPage = () => {
 
   useEffect(() => {
     handleVideoPlayback();
-
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -39,49 +38,21 @@ const LandingPage = () => {
       title: language === 'fr' ? "Nos Départements" : "Our Departments",
       submenu: language === 'fr'
         ? ["Technologies de l'Informatique", "Génie Électrique", "Génie civil", "Génie mécanique"]
-        : ["Information Technology", "Electrical Engineering", "Management"]
+        : ["Information Technology", "Electrical Engineering", "Civil Engineering", "Mechanical Engineering"]
     },
-    
     {
       title: language === 'fr' ? "Vie Étudiantine" : "Student Life",
       submenu: language === 'fr'
         ? ["Clubs", "Manifestations", "Activités sportives", "Activités culturelles"]
         : ["Clubs", "Events", "Sports Activities", "Cultural Activities"]
     },
-    
-   
-    
   ];
 
   const STATISTICS = [
-    {
-      icon: '🎓',
-      number: '600',
-      label: language === 'fr' ? 'ÉTUDIANTS' : 'STUDENTS',
-      sublabel: language === 'fr'
-        ? "L'ANNÉE UNIVERSITAIRE 2021/2022"
-        : "ACADEMIC YEAR 2021/2022"
-    },
-    {
-      icon: '👨‍🏫',
-      number: '60',
-      label: language === 'fr' ? 'ENSEIGNANTS' : 'TEACHERS',
-      sublabel: language === 'fr'
-        ? "L'ANNÉE UNIVERSITAIRE 2021/2022"
-        : "ACADEMIC YEAR 2021/2022"
-    },
-    {
-      icon: '🏛️',
-      number: '12',
-      label: language === 'fr' ? 'CLUBS' : 'CLUBS',
-      sublabel: null
-    },
-    {
-      icon: '📜',
-      number: '1500',
-      label: language === 'fr' ? 'DIPLÔMÉS' : 'GRADUATES',
-      sublabel: language === 'fr' ? '(DEPUIS 2004)' : '(SINCE 2004)'
-    }
+    { icon: '🎓', number: '600', label: language === 'fr' ? 'ÉTUDIANTS' : 'STUDENTS', sublabel: language === 'fr' ? "L'ANNÉE UNIVERSITAIRE 2021/2022" : "ACADEMIC YEAR 2021/2022" },
+    { icon: '👨‍🏫', number: '60', label: language === 'fr' ? 'ENSEIGNANTS' : 'TEACHERS', sublabel: language === 'fr' ? "L'ANNÉE UNIVERSITAIRE 2021/2022" : "ACADEMIC YEAR 2021/2022" },
+    { icon: '🏛️', number: '12', label: language === 'fr' ? 'CLUBS' : 'CLUBS', sublabel: null },
+    { icon: '📜', number: '1500', label: language === 'fr' ? 'DIPLÔMÉS' : 'GRADUATES', sublabel: language === 'fr' ? '(DEPUIS 2004)' : '(SINCE 2004)' }
   ];
 
   return (
@@ -191,7 +162,6 @@ const LandingPage = () => {
             <source src={heroVideo} type="video/mp4" />
           </video>
         )}
-
         <div className="hero-overlay"></div>
         <div className="container">
           <div className="hero-content">
@@ -280,6 +250,29 @@ const LandingPage = () => {
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Google Maps Section */}
+      <section className="map-section">
+        <div className="container">
+          <h2 className="section-title">
+            {language === 'fr' ? "Où nous trouver" : "Where to find us"}
+          </h2>
+          <div className="section-divider"></div>
+
+          <div className="map-container">
+            <iframe
+              title="ISET Tozeur Map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16081.96030973686!2d8.0862818!3d33.9162409!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1257eb1de9c3275d%3A0x1db1e425aa8df340!2sInstitut%20Sup%C3%A9rieur%20des%20Etudes%20Technologiques%20de%20Tozeur!5e0!3m2!1sfr!2stn!4v1705570000000!5m2!1sfr!2stn"
+              width="100%"
+              height="450"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </section>
