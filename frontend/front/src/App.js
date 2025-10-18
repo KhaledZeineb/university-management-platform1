@@ -9,6 +9,8 @@ import TeacherDashboard from './components/TeacherDashboard';
 import DirectorDashboard from './components/DirectorDashboard';
 import AdministrativeDashboard from './components/AdministrativeDashboard';
 import AdminPanel from './components/AdminPanel';
+import ConfirmEmailPage from './components/ConfirmEmailPage';
+import ChangePasswordPage from './components/ChangePasswordPage';
 import './App.css';
 
 // Protected Route Component
@@ -38,6 +40,8 @@ function App() {
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/auth/confirm-email" element={<ConfirmEmailPage />} />
+            <Route path="/change-password" element={<ChangePasswordPage />} />
             <Route 
               path="/dashboard" 
               element={

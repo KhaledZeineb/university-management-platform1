@@ -48,7 +48,19 @@ export class AuthService {
       prenom: user.prenom,
     };
     const access_token = await this.jwt.signAsync(payload);
-    return { access_token, user: payload };
+
+    return {
+      success: true,
+      message: 'Connexion réussie',
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        nom: user.nom,
+        prenom: user.prenom,
+      },
+      token: access_token,
+    };
   }
 
   async changePassword(email: string, currentPassword: string, newPassword: string) {
@@ -62,7 +74,28 @@ export class AuthService {
     user.doit_changer_mdp = false;
 
     await this.usersRepo.save(user);
-    return { message: 'Mot de passe mis à jour' };
+
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      nom: user.nom,
+      prenom: user.prenom,
+    };
+    const access_token = await this.jwt.signAsync(payload);
+
+    return {
+      success: true,
+      message: 'Mot de passe mis à jour',
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        nom: user.nom,
+        prenom: user.prenom,
+      },
+      token: access_token,
+    };
   }
 
   // Utilitaire pour import initial: mdp = hash(CIN) + forcer changement

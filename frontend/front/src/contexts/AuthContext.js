@@ -87,13 +87,37 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const changePassword = async (email, currentPassword, newPassword) => {
+    try {
+      const response = await axios.post('/auth/change-password', { email, currentPassword, newPassword });
+      
+      if (response.data.success) {
+        const { user: userData, token } = response.data;
+        
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(userData));
+        setUser(userData);
+        setIsAuthenticated(true);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        
+        return { success: true, user: userData };
+      }
+    } catch (error) {
+      return {
+        success: false,
+        message: error.response?.data?.message || 'Erreur lors du changement de mot de passe'
+      };
+    }
+  };
+
   const value = {
     user,
     isAuthenticated,
     loading,
     login,
     logout,
-    register
+    register,
+    changePassword
   };
 
   return (
