@@ -39,6 +39,8 @@ const LoginPage = () => {
           default:
             navigate('/dashboard'); // fallback
         }
+      } else if (result.message === 'Changement de mot de passe requis') {
+        navigate('/change-password', { state: { email } });
       } else {
         setError(result.message);
       }
