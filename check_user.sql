@@ -1,1 +1,0 @@
-SELECT email, mdp_hash, role, doit_changer_mdp, "emailConfirmed" FROM utilisateur ORDER BY email;
