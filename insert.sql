@@ -1,1 +1,0 @@
-INSERT INTO utilisateur (nom, prenom, email, cin, mdp_hash, role, "doit_changer_mdp", "emailConfirmed") VALUES ('Test', 'User', 'test@example.com', '12345678', '$2a$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewdBPjYLC3zyT5W', 'etudiant', true, true);
