@@ -59,28 +59,15 @@ const ScheduleViewer = () => {
       setLoading(true);
       const classesData = await scheduleService.getClasses();
       
-      // Filtrer les classes selon le département du chef connecté
-      let filteredClasses = classesData;
-      if (user?.role === 'directeur_departement' && user?.departement?.id) {
-        console.log('🔍 [ScheduleViewer] Filtering classes for department:', user.departement);
-        console.log('🔍 [ScheduleViewer] All classes:', classesData);
-        filteredClasses = classesData.filter(classe => {
-          const classeDeptId = classe.specialite?.departement?.id;
-          console.log(`🔍 [ScheduleViewer] Classe ${classe.nom}: deptId=${classeDeptId}`);
-          return classeDeptId === user.departement.id;
-        });
-        console.log('🔍 [ScheduleViewer] Filtered classes:', filteredClasses);
-      }
-      
-      setClasses(filteredClasses);
+      setClasses(classesData);
       
       const classIdParam = searchParams.get('classId');
       const semestreParam = searchParams.get('semestre');
       
       if (classIdParam) {
         setSelectedClass(classIdParam);
-      } else if (filteredClasses.length > 0) {
-        setSelectedClass(filteredClasses[0].id.toString());
+      } else if (classesData.length > 0) {
+        setSelectedClass(classesData[0].id.toString());
       }
       
       if (semestreParam) {
@@ -400,22 +387,6 @@ const ScheduleViewer = () => {
                               </div>
                               <div className="course-room">
                                 {grid[day][timeSlot].salle}
-                              </div>
-                              <div className="course-actions">
-                                <button 
-                                  onClick={() => handleEditClick(day, timeSlot, grid[day][timeSlot])}
-                                  className="edit-course-btn"
-                                  title="Modifier"
-                                >
-                                  ✎
-                                </button>
-                                <button 
-                                  onClick={() => handleDeleteCourse(day, timeSlot, grid[day][timeSlot])}
-                                  className="delete-course-btn"
-                                  title="Supprimer"
-                                >
-                                  ✕
-                                </button>
                               </div>
                             </div>
                           )

@@ -66,20 +66,7 @@ const ScheduleBuilder = () => {
         scheduleService.getRooms()
       ]);
 
-      // Filtrer les classes selon le département du chef connecté
-      let filteredClasses = classesData;
-      if (user?.role === 'directeur_departement' && user?.departement?.id) {
-        console.log('🔍 [ScheduleBuilder] Filtering classes for department:', user.departement);
-        console.log('🔍 [ScheduleBuilder] All classes:', classesData);
-        filteredClasses = classesData.filter(classe => {
-          const classeDeptId = classe.specialite?.departement?.id;
-          console.log(`🔍 [ScheduleBuilder] Classe ${classe.nom}: deptId=${classeDeptId}`);
-          return classeDeptId === user.departement.id;
-        });
-        console.log('🔍 [ScheduleBuilder] Filtered classes:', filteredClasses);
-      }
-
-      setClasses(filteredClasses);
+      setClasses(classesData);
       setTeachers(teachersData);
       setSubjects(subjectsData);
       setRooms(roomsData);
