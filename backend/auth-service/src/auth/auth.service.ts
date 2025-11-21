@@ -353,34 +353,215 @@ export class AuthService {
     console.log('🔄 [UpdateProfile] Email:', email);
     console.log('🔄 [UpdateProfile] Updates:', updates);
     
+    // 1️⃣ Vérifier dans la table utilisateur (admin/administratif)
     const user = await this.usersRepo.findOne({ where: { email } });
-    if (!user) {
-      console.log('❌ [UpdateProfile] User not found');
-      throw new UnauthorizedException('Utilisateur introuvable');
+    
+    if (user) {
+      console.log('✅ [UpdateProfile] Admin/User found:', user.nom, user.prenom);
+
+      if (updates.nom !== undefined) user.nom = updates.nom;
+      if (updates.prenom !== undefined) user.prenom = updates.prenom;
+      if (updates.cin !== undefined) user.cin = updates.cin;
+
+      console.log('💾 [UpdateProfile] Saving updates...');
+      await this.usersRepo.save(user);
+      console.log('✅ [UpdateProfile] Saved successfully');
+
+      return {
+        success: true,
+        message: 'Profil mis à jour avec succès',
+        user: {
+          id: user.id,
+          email: user.email,
+          nom: user.nom,
+          prenom: user.prenom,
+          cin: user.cin,
+          role: user.role,
+        },
+      };
     }
 
-    console.log('✅ [UpdateProfile] User found:', user.nom, user.prenom);
+    // 2️⃣ Vérifier dans la table enseignant
+    console.log('🔍 [UpdateProfile] Not found in utilisateur, checking enseignant...');
+    const enseignantResult = await this.dataSource.query(
+      `SELECT e.id, e.email, e.nom, e.prenom, e.cin, e.role, e."departementId",
+              d.id as "departement_id", d.nom as "departement_nom"
+       FROM enseignant e
+       LEFT JOIN departement d ON e."departementId" = d.id
+       WHERE e.email = $1`,
+      [email]
+    );
 
-    if (updates.nom !== undefined) user.nom = updates.nom;
-    if (updates.prenom !== undefined) user.prenom = updates.prenom;
-    if (updates.cin !== undefined) user.cin = updates.cin;
+    if (enseignantResult && enseignantResult.length > 0) {
+      const enseignant = enseignantResult[0];
+      console.log('✅ [UpdateProfile] Enseignant found:', enseignant.nom, enseignant.prenom);
 
-    console.log('💾 [UpdateProfile] Saving updates...');
-    await this.usersRepo.save(user);
-    console.log('✅ [UpdateProfile] Saved successfully');
+      // Construire la requête UPDATE dynamiquement
+      const updateFields: string[] = [];
+      const updateValues: any[] = [];
+      let paramIndex = 1;
 
-    return {
-      success: true,
-      message: 'Profil mis à jour avec succès',
-      user: {
-        id: user.id,
-        email: user.email,
-        nom: user.nom,
-        prenom: user.prenom,
-        cin: user.cin,
-        role: user.role,
-      },
-    };
+      if (updates.nom !== undefined) {
+        updateFields.push(`nom = $${paramIndex++}`);
+        updateValues.push(updates.nom);
+      }
+      if (updates.prenom !== undefined) {
+        updateFields.push(`prenom = $${paramIndex++}`);
+        updateValues.push(updates.prenom);
+      }
+      if (updates.cin !== undefined) {
+        updateFields.push(`cin = $${paramIndex++}`);
+        updateValues.push(updates.cin);
+      }
+
+      if (updateFields.length > 0) {
+        updateValues.push(email);
+        const updateQuery = `UPDATE enseignant SET ${updateFields.join(', ')} WHERE email = $${paramIndex}`;
+        
+        console.log('💾 [UpdateProfile] Updating enseignant with query:', updateQuery);
+        console.log('💾 [UpdateProfile] Values:', updateValues);
+        
+        await this.dataSource.query(updateQuery, updateValues);
+        console.log('✅ [UpdateProfile] Enseignant updated successfully');
+      }
+
+      // Récupérer les données mises à jour
+      const updatedResult = await this.dataSource.query(
+        `SELECT e.id, e.email, e.nom, e.prenom, e.cin, e.role,
+                d.id as "departement_id", d.nom as "departement_nom"
+         FROM enseignant e
+         LEFT JOIN departement d ON e."departementId" = d.id
+         WHERE e.email = $1`,
+        [email]
+      );
+
+      const updatedEnseignant = updatedResult[0];
+      const userData: any = {
+        id: updatedEnseignant.id,
+        email: updatedEnseignant.email,
+        nom: updatedEnseignant.nom,
+        prenom: updatedEnseignant.prenom,
+        cin: updatedEnseignant.cin,
+        role: updatedEnseignant.role,
+      };
+
+      if (updatedEnseignant.departement_id) {
+        userData.departement = {
+          id: updatedEnseignant.departement_id,
+          nom: updatedEnseignant.departement_nom
+        };
+      }
+
+      return {
+        success: true,
+        message: 'Profil mis à jour avec succès',
+        user: userData,
+      };
+    }
+
+    // 3️⃣ Vérifier dans la table etudiant
+    console.log('🔍 [UpdateProfile] Not found in enseignant, checking etudiant...');
+    const etudiantResult = await this.dataSource.query(
+      `SELECT et.id, et.email, et.nom, et.prenom, et.cin, et.role, et."classeId",
+              c.nom as "classe_nom", c."specialiteId",
+              s.nom as "specialite_nom", s."departementId",
+              d.id as "departement_id", d.nom as "departement_nom"
+       FROM etudiant et
+       LEFT JOIN classe c ON et."classeId" = c.id
+       LEFT JOIN specialite s ON c."specialiteId" = s.id
+       LEFT JOIN departement d ON s."departementId" = d.id
+       WHERE et.email = $1`,
+      [email]
+    );
+
+    if (etudiantResult && etudiantResult.length > 0) {
+      const etudiant = etudiantResult[0];
+      console.log('✅ [UpdateProfile] Etudiant found:', etudiant.nom, etudiant.prenom);
+
+      // Construire la requête UPDATE dynamiquement
+      const updateFields: string[] = [];
+      const updateValues: any[] = [];
+      let paramIndex = 1;
+
+      if (updates.nom !== undefined) {
+        updateFields.push(`nom = $${paramIndex++}`);
+        updateValues.push(updates.nom);
+      }
+      if (updates.prenom !== undefined) {
+        updateFields.push(`prenom = $${paramIndex++}`);
+        updateValues.push(updates.prenom);
+      }
+      if (updates.cin !== undefined) {
+        updateFields.push(`cin = $${paramIndex++}`);
+        updateValues.push(updates.cin);
+      }
+
+      if (updateFields.length > 0) {
+        updateValues.push(email);
+        const updateQuery = `UPDATE etudiant SET ${updateFields.join(', ')} WHERE email = $${paramIndex}`;
+        
+        console.log('💾 [UpdateProfile] Updating etudiant with query:', updateQuery);
+        console.log('💾 [UpdateProfile] Values:', updateValues);
+        
+        await this.dataSource.query(updateQuery, updateValues);
+        console.log('✅ [UpdateProfile] Etudiant updated successfully');
+      }
+
+      // Récupérer les données mises à jour
+      const updatedResult = await this.dataSource.query(
+        `SELECT et.id, et.email, et.nom, et.prenom, et.cin, et.role,
+                c.id as "classe_id", c.nom as "classe_nom",
+                s.id as "specialite_id", s.nom as "specialite_nom",
+                d.id as "departement_id", d.nom as "departement_nom"
+         FROM etudiant et
+         LEFT JOIN classe c ON et."classeId" = c.id
+         LEFT JOIN specialite s ON c."specialiteId" = s.id
+         LEFT JOIN departement d ON s."departementId" = d.id
+         WHERE et.email = $1`,
+        [email]
+      );
+
+      const updatedEtudiant = updatedResult[0];
+      const userData: any = {
+        id: updatedEtudiant.id,
+        email: updatedEtudiant.email,
+        nom: updatedEtudiant.nom,
+        prenom: updatedEtudiant.prenom,
+        cin: updatedEtudiant.cin,
+        role: updatedEtudiant.role,
+      };
+
+      if (updatedEtudiant.classe_id) {
+        userData.classe = {
+          id: updatedEtudiant.classe_id,
+          nom: updatedEtudiant.classe_nom
+        };
+      }
+
+      if (updatedEtudiant.specialite_id) {
+        userData.specialite = {
+          id: updatedEtudiant.specialite_id,
+          nom: updatedEtudiant.specialite_nom
+        };
+      }
+
+      if (updatedEtudiant.departement_id) {
+        userData.departement = {
+          id: updatedEtudiant.departement_id,
+          nom: updatedEtudiant.departement_nom
+        };
+      }
+
+      return {
+        success: true,
+        message: 'Profil mis à jour avec succès',
+        user: userData,
+      };
+    }
+
+    // Si aucun utilisateur n'est trouvé
+    console.log('❌ [UpdateProfile] Not found in any table');
+    throw new UnauthorizedException('Utilisateur introuvable');
   }
 
   // Utilitaire pour import initial: mdp = hash(CIN) + forcer changement

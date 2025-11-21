@@ -4,7 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import "./Dashboard.css";
 
 const StudentDashboard = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, updateUser } = useAuth();
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -123,12 +123,24 @@ const StudentDashboard = () => {
     }
 
     try {
-      // Simulate API call to update profile
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      // Update user context (if needed)
-      alert("Profil mis à jour avec succès!");
-      setEditingProfile(false);
+      const response = await updateUser({
+        nom: profileData.nom,
+        prenom: profileData.prenom,
+        cin: user.cin, // CIN ne peut pas être modifié
+      });
+
+      if (response.success) {
+        alert("Profil mis à jour avec succès!");
+        setEditingProfile(false);
+        // Mettre à jour les données du profil avec les nouvelles valeurs
+        setProfileData({
+          ...profileData,
+          prenom: response.user.prenom,
+          nom: response.user.nom,
+        });
+      } else {
+        alert(response.message || "Erreur lors de la mise à jour du profil");
+      }
     } catch (error) {
       console.error("Erreur lors de la mise à jour:", error);
       alert("Erreur lors de la mise à jour du profil. Veuillez réessayer.");
